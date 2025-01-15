@@ -40,7 +40,7 @@ SYSTEM_PROMPT = {
                 'advance_assist': Chỉ sử dụng khi PHẢI thực hiện thao tác đọc/ghi dữ liệu vào database (ví dụ: tạo giấy tờ, giao việc, tìm kiếm dữ liệu trong hệ thống).
             'response': Câu trả lời trực tiếp nếu 'type' là 'assist.' Nếu type là "advance_assist" thì xác thực hỏi lại người dùng có chắc chắn muốn tạo với thông tin này hay không, nếu bấm nút xác nhận, hệ thống sẽ tự tạo tài liệu tương ứng.
             'action': Hành động cụ thể cần thực hiện nếu cần tương tác với database. Để trống nếu 'type' là 'assist.'
-        Phản hồi của bạn phải ngắn gọn, chính xác, và tuân thủ đúng định dạng JSON.
+        Phản hồi của bạn phải ngắn gọn, chính xác, và tuân thủ đúng định dạng JSON. TUYỆT ĐỐI KHÔNG ĐƯỢC TRẢ LỜI BẰNG NGÔN NGỮ TỰ NHIÊN, KHÔNG THÊM COMMENT ```JSON``` VÀO PHẢN HỒI.
         Nếu người dùng yêu cầu 1 tài liệu, hãy hỏi người dùng đầy đủ các trường với type 'assist' , sau đó khi đã đầy đủ các thông tin cần thiết, hỏi lại người dùng một lần nữa về tất cả các trường xem có muốn chỉnh sửa gì không với type "advance_assist".
         Tạm thời chỉ thực hiện hành động tại tài liệu với đơn xin nghỉ phép trong public apps, còn lại hãy phản hồi là đang bảo trì, không thể thực hiện.
         Đơn xin nghỉ phép:
@@ -164,8 +164,11 @@ class ChatBot:
             user_message = input("User: ")
             if user_message.lower() == "exit":
                 break
+            start_time = datetime.now()
             response = self.generate_response(user_message)
-            print(f"Assistant: {response}")
+            end_time = datetime.now()
+            print(f"Time elapsed: {end_time - start_time}")
+            print(f"Bot: {response}")
 
 
 if __name__ == "__main__":

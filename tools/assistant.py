@@ -10,7 +10,7 @@ OPENAI_CONFIG = {
     'MODEL': "gpt-4o-mini",
     # 'MODEL': "gpt-4o-mini-2024-07-18",
     
-    'COUNT_LIMIT': 3,
+    'COUNT_LIMIT': 100,
     'ASSISTANT_ID': 'asst_YpC99r5sp9We0UpEmZhngiHx'
     # 'SYSTEM_PROMPT': SYSTEM_PROMPT["1"]
 }
@@ -21,6 +21,9 @@ class AssistantV2:
         self.assistant_id = config['ASSISTANT_ID']
         self.database_path = 'conversation_history_v2.db'
         self._initialize_database()
+        
+        # Tạo thread mới
+        self.thread = None
 
     def _initialize_database(self):
         """Tạo cơ sở dữ liệu và bảng nếu chưa tồn tại."""
@@ -72,27 +75,40 @@ class AssistantV2:
     def generate_response(self, user_message):
         """Tạo phản hồi dựa trên tin nhắn người dùng."""
         try:
-            # Tạo thread mới
-            thread = self.client.beta.threads.create()
+            # conversation_history = self.fetch_history()
+            # for conv in conversation_history:
+            #     # Gửi tin nhắn vào thread
+            #     self.client.beta.threads.messages.create(
+            #         thread_id=self.thread.id,
+            #         role="user",
+            #         content=conv['message']
+            #     )
+
+            #     # Gửi tin nhắn vào thread
+            #     self.client.beta.threads.messages.create(
+            #         thread_id=self.thread.id,
+            #         role="assistant",
+            #         content=conv['response']
+            #     )
 
             # Gửi tin nhắn vào thread
             self.client.beta.threads.messages.create(
-                thread_id=thread.id,
+                thread_id=self.thread.id,
                 role="user",
                 content=user_message
             )
 
             # Thực thi thread và chờ kết quả
             run = self.client.beta.threads.runs.create_and_poll(
-                thread_id=thread.id,
+                thread_id=self.thread.id,
                 assistant_id=self.assistant_id
             )
 
             if run.status == 'completed':
                 # Lấy danh sách tin nhắn từ thread
-                messages = self.client.beta.threads.messages.list(thread_id=thread.id)
+                messages = self.client.beta.threads.messages.list(thread_id=self.thread.id)
+                
                 assistant_message_raw = messages.data[0].content[0].text.value
-
                 # Xử lý nội dung trả về
                 cleaned_string = assistant_message_raw.strip("```json").strip("```").strip()
                 assistant_message = json.loads(cleaned_string)
@@ -109,12 +125,16 @@ class AssistantV2:
             return None
 
     def start_chat(self):
+        self.thread = self.client.beta.threads.create()
         """Bắt đầu vòng lặp hội thoại."""
         while True:
             user_message = input("User: ")
             if user_message.lower() == "exit":
                 break
+            start_time = datetime.now()
             response = self.generate_response(user_message)
+            end_time = datetime.now()
+            print(f"Time elapsed: {end_time - start_time}")
             print(f"Assistant: {response}")
 
 if __name__ == "__main__":
