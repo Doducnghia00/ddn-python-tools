@@ -55,12 +55,14 @@ SYSTEM_PROMPT = {
 OPENAI_CONFIG = {
     'API_KEY': os.getenv("OPENAI_API_KEY"),
     'BASE_URL': "https://api.openai.com/v1",
-    'MODEL': "gpt-4o-mini",
+    # 'MODEL': "gpt-4o-mini",
     # 'MODEL': "gpt-4o-mini-2024-07-18",
+    'MODEL': "ft:gpt-4o-mini-2024-07-18:gk-software-vietnam::ApAFfGzA",
+    
     
     'COUNT_LIMIT': 3,
     
-    'SYSTEM_PROMPT': SYSTEM_PROMPT["1"]
+    'SYSTEM_PROMPT': SYSTEM_PROMPT["2"]
 }
 
 class ChatBot:

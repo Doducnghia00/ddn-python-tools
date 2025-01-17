@@ -1,3 +1,4 @@
 python-dotenv==1.0.1
 Openai>=1.59.6
 pytz>=2024.2
+yt_dlp>=2025.1.15
