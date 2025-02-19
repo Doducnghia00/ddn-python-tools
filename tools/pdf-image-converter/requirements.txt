@@ -1,0 +1,3 @@
+requests>=2.25.1
+pdf2image>=1.16.0
+Pillow>=8.0.0

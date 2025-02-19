@@ -1,47 +1,71 @@
 # DDN Python Tools
 
-## Introduction
-This repository contains various Python tools for different purposes.
+A collection of useful Python tools and utilities for various purposes.
 
-## Setup
+## 🛠 Tools Available
 
-### 1. Create a Virtual Environment
-First, create a virtual environment to manage dependencies:
+### YouTube Downloader
+Located in `tools/youtube-downloader/`
+- GUI and CLI versions available
+- Download single or multiple videos
+- Quality selection (360p to 2160p)
+- Custom output directory
+- [Learn more](tools/youtube-downloader/README.md)
+
+### PDF-Image Converter
+Located in `tools/pdf-image-converter/`
+- Convert PDF to Images
+- Convert Images to PDF
+- [Learn more](tools/pdf-image-converter/README.md)
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Python 3.7 or higher
+- pip (Python package manager)
+
+### Installation
+
+1. Clone the repository:
 ```bash
-python -m venv v-env
+git clone https://github.com/yourusername/ddn-python-tools.git
+cd ddn-python-tools
 ```
 
-### 2. Activate the Virtual Environment
-Activate the virtual environment using the following command:
-
-For Windows:
+2. Create a virtual environment:
 ```bash
+python -m venv venv
+```
+
+3. Activate the virtual environment:
+```bash
+# Windows
 venv\Scripts\activate
+
+# macOS/Linux
+source venv/bin/activate
 ```
 
-For macOS and Linux:
-```bash
-source v-env/bin/activate
-```
-
-### 3. Install Dependencies
-Install the required dependencies using `pip`:
+4. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Running the Scripts
-
-### assistant.py
-To run the `assistant.py` script, use the following command:
-```bash
-python assistant.py
+## 📦 Project Structure
+```
+ddn-python-tools/
+├── tools/
+│   ├── youtube-downloader/
+│   │   ├── youtube_downloader_gui.py
+│   │   ├── youtube_downloader_cli.py
+│   │   └── README.md
+│   └── [other-tool]/
+│       └── ...
+├── requirements.txt
+└── README.md
 ```
 
-### open_ai.py
-To run the `open_ai.py` script, use the following command:
-```bash
-python open_ai.py
-```
 
-Make sure you have all the necessary dependencies installed before running the scripts.
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

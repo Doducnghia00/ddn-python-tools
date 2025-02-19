@@ -55,9 +55,9 @@ SYSTEM_PROMPT = {
 OPENAI_CONFIG = {
     'API_KEY': os.getenv("OPENAI_API_KEY"),
     'BASE_URL': "https://api.openai.com/v1",
-    # 'MODEL': "gpt-4o-mini",
+    'MODEL': "gpt-4o-mini",
     # 'MODEL': "gpt-4o-mini-2024-07-18",
-    'MODEL': "ft:gpt-4o-mini-2024-07-18:gk-software-vietnam::ApAFfGzA",
+    # 'MODEL': "ft:gpt-4o-mini-2024-07-18:gk-software-vietnam::ApAFfGzA",
     
     
     'COUNT_LIMIT': 3,
@@ -128,7 +128,22 @@ class ChatBot:
                 messages.append({"role": "assistant", "content": conv['response']})
             
             # Thêm tin nhắn hiện tại
-            messages.append({"role": "user", "content": user_message})
+            # messages.append({"role": "user", "content": user_message})
+            
+            messages.append({"role": "user", "content": [
+                {
+                    "type": "text",
+                    "text": user_message
+                },
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url":  "https://www.imws.vn/file/2a0229bb"
+                    }
+                }
+            ]})
+            # PDF https://www.imws.vn/file/2a0229bb
+            # Image https://www.imws.vn/file/355667f0
             
             # Gọi API
             response = self.client.chat.completions.create(
